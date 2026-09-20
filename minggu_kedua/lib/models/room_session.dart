@@ -1,140 +1,131 @@
-enum SessionStatus { berlangsung, akanDatang, selesai, tersedia }
-
-extension SessionStatusX on SessionStatus {
-  String get label {
-    switch (this) {
-      case SessionStatus.berlangsung:
-        return 'Berlangsung';
-      case SessionStatus.akanDatang:
-        return 'Akan Datang';
-      case SessionStatus.selesai:
-        return 'Selesai';
-      case SessionStatus.tersedia:
-        return 'Tersedia';
-    }
-  }
-}
-
-
 class RoomSession {
   final String id;
   final String roomName;
-  final String category; 
-  final String activityName;
+  final String activityTitle;
+  final String timeSlot;
+  final String status;
+  final String lecturer;
   final String description;
-  final String timeRange; 
-  final SessionStatus status;
   final int capacity;
-  final int occupied;
+  final bool isLabComputer;
 
-  const RoomSession({
+  RoomSession({
     required this.id,
     required this.roomName,
-    required this.category,
-    required this.activityName,
-    required this.description,
-    required this.timeRange,
+    required this.activityTitle,
+    required this.timeSlot,
     required this.status,
+    required this.lecturer,
+    required this.description,
     required this.capacity,
-    required this.occupied,
+    required this.isLabComputer,
   });
-}
 
-class RoomSessionRepository {
-  static List<RoomSession> getSessions() {
-    return const [
+  static List<RoomSession> getSampleData() {
+    return [
       RoomSession(
-        id: 'rp-001',
-        roomName: 'Lab Praktikum Pemrograman A',
-        category: 'Pemrograman',
-        activityName: 'Praktikum Struktur Data dan Algoritma Lanjut',
+        id: 'RS01',
+        roomName: 'Lab Pemrograman 1',
+        activityTitle:
+            'Praktikum Pemrograman Perangkat Bergerak & Declarative UI Layout',
+        timeSlot: '08.00 - 10.00 WIB',
+        status: 'Berlangsung',
+        lecturer: 'Dosen Praktikum TRPL',
         description:
-            'Sesi praktikum membahas implementasi struktur data pohon biner, '
-            'traversal, dan studi kasus penerapannya pada sistem pencarian data.',
-        timeRange: '08:00 - 10:00',
-        status: SessionStatus.berlangsung,
+            'Sesi praktikum pengembangan antarmuka deklaratif dan tata letak responsif menggunakan Flutter Material Design 3 untuk mahasiswa semester 5.',
         capacity: 30,
-        occupied: 27,
+        isLabComputer: true,
       ),
       RoomSession(
-        id: 'rp-002',
-        roomName: 'Lab Praktikum Pemrograman B',
-        category: 'Pemrograman',
-        activityName: 'Praktikum Basis Data',
-        description: 'Latihan query SQL dan normalisasi tabel.',
-        timeRange: '10:15 - 12:00',
-        status: SessionStatus.akanDatang,
-        capacity: 25,
-        occupied: 0,
-      ),
-      RoomSession(
-        id: 'rp-003',
-        roomName: 'Lab Praktikum Elektronika',
-        category: 'Elektronika',
-        activityName: 'Praktikum Rangkaian Digital',
-        description: 'Perancangan gerbang logika dasar menggunakan IC TTL.',
-        timeRange: '13:00 - 15:00',
-        status: SessionStatus.selesai,
-        capacity: 20,
-        occupied: 0,
-      ),
-      RoomSession(
-        id: 'rp-004',
-        roomName: 'Studio Praktikum Desain Grafis',
-        category: 'Desain',
-        activityName: 'Praktikum Desain Antarmuka Pengguna',
+        id: 'RS02',
+        roomName: 'Lab Pemrograman 2',
+        activityTitle:
+            'Praktikum Basis Data Lanjut & Optimasi Query Terdistribusi',
+        timeSlot: '10.00 - 12.00 WIB',
+        status: 'Akan Datang',
+        lecturer: 'Tim Dosen Basis Data',
         description:
-            'Mahasiswa merancang wireframe dan prototipe aplikasi mobile '
-            'menggunakan prinsip Material Design 3 dan pengujian usability sederhana '
-            'terhadap lima responden.',
-        timeRange: '09:00 - 11:00',
-        status: SessionStatus.berlangsung,
-        capacity: 15,
-        occupied: 12,
+            'Pembahasan mengenai indexing, query optimization, serta pengujian performa skema database relasional pada sistem terdistribusi.',
+        capacity: 35,
+        isLabComputer: true,
       ),
       RoomSession(
-        id: 'rp-005',
-        roomName: 'Lab Praktikum Pemrograman A',
-        category: 'Pemrograman',
-        activityName: 'Praktikum Pemrograman Mobile',
-        description: 'Sesi lanjutan membangun UI deklaratif dengan Flutter.',
-        timeRange: '13:00 - 15:00',
-        status: SessionStatus.akanDatang,
-        capacity: 30,
-        occupied: 0,
+        id: 'RS03',
+        roomName: 'Lab TUK',
+        activityTitle:
+            'Praktikum Keamanan Jaringan & Hardening Server Utama',
+        timeSlot: '13.00 - 15.00 WIB',
+        status: 'Selesai',
+        lecturer: 'Lab Admin Jaringan',
+        description:
+            'Pengujian penetration testing dasar, konfigurasi firewall, dan analisis lalu lintas paket data menggunakan Wireshark.',
+        capacity: 28,
+        isLabComputer: true,
       ),
       RoomSession(
-        id: 'rp-006',
-        roomName: 'Lab Praktikum Elektronika',
-        category: 'Elektronika',
-        activityName: 'Praktikum Mikrokontroler',
-        description: 'Pemrograman dasar mikrokontroler untuk sistem sensor sederhana.',
-        timeRange: '15:15 - 17:00',
-        status: SessionStatus.tersedia,
-        capacity: 20,
-        occupied: 0,
-      ),
-      RoomSession(
-        id: 'rp-007',
-        roomName: 'Studio Praktikum Desain Grafis',
-        category: 'Desain',
-        activityName: 'Praktikum Ilustrasi Digital',
-        description: 'Latihan menggambar aset ilustrasi vektor untuk aplikasi.',
-        timeRange: '11:00 - 13:00',
-        status: SessionStatus.selesai,
-        capacity: 15,
-        occupied: 0,
-      ),
-      RoomSession(
-        id: 'rp-008',
-        roomName: 'Lab Praktikum Pemrograman B',
-        category: 'Pemrograman',
-        activityName: 'Praktikum Pemrograman Berorientasi Objek',
-        description: 'Studi kasus penerapan inheritance dan polymorphism pada sistem sederhana.',
-        timeRange: '15:15 - 17:00',
-        status: SessionStatus.tersedia,
+        id: 'RS04',
+        roomName: 'Lab Multimedia',
+        activityTitle:
+            'Ruang Bebas Sesi Praktikum Mandiri & Pengerjaan Proyek',
+        timeSlot: '13.00 - 16.00 WIB',
+        status: 'Tersedia',
+        lecturer: 'Asisten Laboratorium',
+        description:
+            'Laboratorium saat ini kosong dan dapat dipinjam oleh mahasiswa untuk pengerjaan tugas akhir atau proyek mandiri dengan izin laboran.',
         capacity: 25,
-        occupied: 0,
+        isLabComputer: false,
+      ),
+      RoomSession(
+        id: 'RS05',
+        roomName: 'Lab Pemrograman 1',
+        activityTitle:
+            'Praktikum Kecerdasan Buatan & Evaluasi Model Machine Learning',
+        timeSlot: '13.30 - 16.00 WIB',
+        status: 'Akan Datang',
+        lecturer: 'Dosen AI & Data Science',
+        description:
+            'Eksperimen pemrosesan data menggunakan Python, TensorFlow, dan evaluasi matriks performa model klasifikasi gambar.',
+        capacity: 30,
+        isLabComputer: true,
+      ),
+      RoomSession(
+        id: 'RS06',
+        roomName: 'Lab Pemrograman 2',
+        activityTitle:
+            'Praktikum Rekayasa Perangkat Lunak & Pemodelan UML',
+        timeSlot: '07.30 - 10.00 WIB',
+        status: 'Selesai',
+        lecturer: 'Tim Dosen RPL',
+        description:
+            'Simulasi pemodelan UML, perancangan diagram sekuensial, dan pengerjaan sprint backlog proyek perangkat lunak.',
+        capacity: 35,
+        isLabComputer: true,
+      ),
+      RoomSession(
+        id: 'RS07',
+        roomName: 'Lab Multimedia',
+        activityTitle:
+            'Praktikum Desain Pengalaman Pengguna (UX Wireframing & Prototype)',
+        timeSlot: '10.00 - 12.30 WIB',
+        status: 'Berlangsung',
+        lecturer: 'Dosen Desain & UX',
+        description:
+            'Pengujian wireframing, penyusunan design system, dan usability testing langsung kepada calon pengguna aplikasi mobile.',
+        capacity: 20,
+        isLabComputer: true,
+      ),
+      RoomSession(
+        id: 'RS08',
+        roomName: 'Lab Multimedia',
+        activityTitle:
+            'Ruang Bebas Pembuatan Aset Visual & Rendering Video 3D',
+        timeSlot: '13.00 - 17.00 WIB',
+        status: 'Tersedia',
+        lecturer: 'Laboran Multimedia',
+        description:
+            'Fasilitas komputer spesifikasi tinggi siap digunakan mahasiswa untuk rendering 3D dan editing video proyek kuliah.',
+        capacity: 20,
+        isLabComputer: true,
       ),
     ];
   }
