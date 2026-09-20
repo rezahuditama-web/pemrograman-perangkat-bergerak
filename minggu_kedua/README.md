@@ -5,91 +5,92 @@
 Panduan interaktif lengkap: [Portal Codelabs TRPL Poliwangi](https://codelabs-poliwangi.github.io/MobileDev-Codelabs/)
 
 ---
+# Laporan Tugas Rumah Modul 02: Declarative UI & Responsive Layout
 
-## 1. Identitas Mahasiswa
-
-> [!IMPORTANT]
-> **Wajib Mengganti Data di Bawah Ini!**  
-> Autograding CI/CD akan memeriksa apakah nilai *placeholder* di bawah ini telah diganti dengan Nama dan NIM Anda yang sebenarnya. Jika belum diganti, pengujian `verify_documentation_test.dart` akan gagal.
-
-| Informasi | Data Mahasiswa |
-|---|---|
-| **Nama Lengkap** | Mahasiswa TRPL Poliwangi *(Ganti dengan Nama Lengkap Anda)* |
-| **NIM** | 362458302000 *(Ganti dengan NIM Asli Anda)* |
-| **Kelas / Angkatan** | TRPL 5A / 2024 |
-| **Dosen Pengampu** | Sepyan Purnama Kristanto, M.Kom. |
+* **Nama**: Fachreza Huditama
+* **NIM**: 362558302102
+* **Kelas / Prodi**: 2C / Sarjana Terapan Teknologi Rekayasa Perangkat Lunak
+* **Digit Terakhir NIM**: 2
+* **Dosen Pengampu**: Sepyan Purnama Kristanto, M.Kom.
+* **Domain Aplikasi**: Ruang Praktikum
+* **Nama Aplikasi**: RuangKita - Dashboard Ketersediaan Ruang Praktikum
+* **Kode Identitas UI Wajib**: M02-2102
+* **Mata Kuliah**: Pemrograman Perangkat Bergerak
 
 ---
 
-## 2. Peta Kemajuan Modul Praktikum
+1. Arsitektur Widget
 
-Aplikasi ini menggunakan **Sistem Kontrol Akses Modul Terpusat (Smart Gating)** di file `lib/main.dart` agar mahasiswa belajar selaras dengan ritme materi dosen di kelas:
+RuangKita - Dashboard Ketersediaan Ruang Praktikum merupakan aplikasi Flutter yang digunakan untuk menampilkan informasi ruang praktikum, jadwal kegiatan, status ruang, dosen atau penanggung jawab, serta kapasitas ruang.
 
-| Modul | Topik & Arsitektur | Status Akses | Perintah Self-Test Lokal | Bobot CI |
-|:---:|---|:---:|---|:---:|
-| **#01** | Mobile Ecosystem, Toolchain & Profile App | `⚡ Aktif` | `flutter test test/modul_01_test.dart` | 20 Pts |
-| **#02** | Declarative UI, BoxConstraints & Responsive Dashboard | `🔒 Terkunci (W02)` | `flutter test test/modul_02_test.dart` | 20 Pts |
-| **#03** | Navigation (GoRouter), Riverpod & 4-State KRS App | `🔒 Terkunci (W03)` | `flutter test test/modul_03_test.dart` | 20 Pts |
-| **#04** | Networking, REST API Dio & Repository Pattern | `🔒 Terkunci (W04)` | `flutter test test/modul_04_test.dart` | 15 Pts |
-| **Dok** | Verifikasi Identitas Asli Mahasiswa di README | `Wajib` | `flutter test test/verify_documentation_test.dart` | 10 Pts |
-| **Lint** | Dart Code Formatting & Static Analysis | `Wajib` | `flutter analyze --no-fatal-infos` | 15 Pts |
-| **Total** | **Skor Maksimal Evaluasi Autograding** | — | `flutter test` | **100 Pts** |
+Aplikasi menggunakan konsep Declarative UI dengan Material Design 3. Data ruang disimpan secara lokal menggunakan model RoomSession, sedangkan tampilan kartu ruang dibuat menggunakan widget terpisah RoomCard.
 
-> [!NOTE]
-> **Membuka Modul Terkunci saat di Laboratorium:**  
-> Jika Anda sedang berada di sesi perkuliahan laboratorium dan dosen mengumumkan pembukaan modul, klik kartu modul yang terkunci di aplikasi lalu masukkan **Token Akses Kelas** yang dibagikan oleh dosen (misal: `TRPL-M02`, `TRPL-M03`, `TRPL-M04`, atau master passcode `POLIWANGI2026`).
+Responsivitas tampilan menggunakan LayoutBuilder dengan tiga kondisi layar, yaitu layar mobile dengan satu kolom, tablet dengan dua kolom, dan layar lebar dengan tiga kolom.
 
----
+2. Layout Responsif
+Lebar	Layout
+< 600 dp	ListView.builder — 1 kolom
+600–839 dp	GridView.builder — 2 kolom
+≥ 840 dp	GridView.builder — 3 kolom
 
-## 3. Panduan Menjalankan & Menguji Kode
+Layout ditentukan menggunakan LayoutBuilder.
 
-### A. Persiapan Lingkungan (Setup)
-```bash
-# 1. Unduh seluruh dependensi paket Flutter
-flutter pub get
+3. Komponen Utama
+Wrap + ChoiceChip untuk filter status.
+LayoutBuilder untuk responsive layout.
+Stack + Positioned untuk badge status.
+showModalBottomSheet untuk detail ruang.
+Material 3 dengan Light/Dark Mode.
 
-# 2. Jalankan aplikasi pada emulator atau perangkat fisik Android/iOS/Web
-flutter run
-```
+## 4. Bukti Tangkapan Layar Running App
 
-### B. Pengujian Mandiri Sebelum Push (Self-Testing)
-Sebelum melakukan `git push` ke repositori tugas GitHub Anda, pastikan seluruh pengujian lulus di mesin lokal:
+Seluruh screenshot aplikasi harus menampilkan kode identitas **M02-2102** pada header aplikasi.
 
-```bash
-# 1. Periksa aturan kode linter Dart
-flutter analyze
+### 4.1 Mobile Light Mode
 
-# 2. Jalankan unit & widget test modul yang sedang Anda kerjakan
-flutter test test/modul_01_test.dart
-flutter test test/modul_02_test.dart
+**Ukuran:** `< 600dp`
+**Layout:** 1 kolom
 
-# 3. Jalankan seluruh test suite sekaligus
-flutter test
-```
+![Mobile Light](./screenshots/MOBILE,TERANG.png)
 
----
+Tampilan mobile menggunakan satu kolom agar informasi kartu tetap mudah dibaca pada layar yang memiliki ruang terbatas.
 
-## 4. Konvensi Pesan Commit (Conventional Commits)
+### 4.2 Tablet Layout
 
-Mahasiswa **wajib** menggunakan format pesan commit terstruktur:
-- `feat(w01): complete profile screen and identity info card`
-- `feat(w02): implement layoutbuilder responsive grid for tablet`
-- `fix(w02): resolve renderflex overflow in course card`
-- `feat(w03): setup gorouter declarative routes and krs notifier`
-- `feat(w04): integrate dio remote datasource and repository pattern`
-- `docs(readme): update student identity and ai reflection table`
+**Ukuran:** `600 - 839dp`
+**Layout:** 2 kolom
+
+![Tablet](./screenshots/TABLET,TERANG.png)
+
+Tampilan tablet menggunakan dua kolom sehingga ruang layar yang lebih lebar dapat dimanfaatkan.
+
+### 4.3 Dark Mode
+
+![Dark Mode](./screenshots/TABLET,GELAP.png)
+
+Screenshot ini menunjukkan perubahan tampilan aplikasi setelah tombol mode tema pada AppBar ditekan.
+
+### 4.4 mobile
+
+![Dark mode mobile](./screenshots/MOBILE,GELAP.png)
 
 ---
 
-## 5. Catatan Penggunaan AI (Responsible AI Disclosure)
+## 5. Tautan Commit Final Repository - 
+**Tautan Commit Final GitHub**: [https://github.com/rezahuditama-web pemrograman-perangkat-bergerak.git]
 
-Sesuai prinsip **Responsible AI** di lingkungan akademik Politeknik Negeri Banyuwangi, mahasiswa diperbolehkan menggunakan AI coding assistant (GitHub Copilot, Gemini Code Assist, ChatGPT) sebagai akselerator belajar, dengan kewajiban mencatat penggunaannya secara transparan pada tabel berikut:
 
-| Modul / File Kode | Alat AI yang Digunakan | Tujuan Penggunaan | Validasi Teknis yang Dilakukan Mahasiswa |
-|---|---|---|---|
-| *Contoh: lib/modul_02/widgets/course_card.dart* | *GitHub Copilot* | *Saran styling Elevation & BoxDecoration* | *Memeriksa contrast ratio WCAG AA dan padding antarmuka* |
-| *Contoh: lib/modul_04/models/announcement.dart* | *Gemini Code Assist* | *Pengecekan null-safety pada fromJson* | *Menambahkan fallback default string kosong untuk mencegah error runtime* |
 
----
+## 6. Jawaban Pertanyaan Refleksi Teknis
 
-*Hak Cipta © 2026 Jurusan Bisnis dan Informatika (JBI), Politeknik Negeri Banyuwangi.*
+### (1) Mengapa `Expanded` Membantu Widget `Text` di Dalam `Row`?
+
+`Row` memiliki ruang horizontal yang terbatas, sehingga teks yang terlalu panjang dapat menyebabkan `RenderFlex overflow`. Dengan menggunakan `Expanded`, widget `Text` akan menyesuaikan diri dengan sisa ruang yang tersedia. Jika dikombinasikan dengan `maxLines` dan `TextOverflow.ellipsis`, teks yang terlalu panjang dapat dipotong tanpa menyebabkan overflow.
+
+### (2) Mengapa `LayoutBuilder` Cocok untuk Layout Lokal?
+
+`MediaQuery` digunakan untuk mengetahui ukuran layar secara keseluruhan, sedangkan `LayoutBuilder` membaca batas ukuran dari parent widget secara langsung melalui `BoxConstraints`. Karena itu, `LayoutBuilder` lebih cocok untuk membuat komponen responsif yang dapat menyesuaikan diri dengan ruang yang tersedia, termasuk ketika digunakan pada panel atau layout yang berbeda.
+
+### (3) Apa yang Terjadi Ketika `setState()` Dipanggil?
+
+Ketika `setState()` dipanggil, Flutter menandai `State` sebagai perlu diperbarui dan menjalankan kembali metode `build()`. Flutter kemudian membandingkan widget yang baru dengan widget sebelumnya dan memperbarui bagian yang mengalami perubahan. Dengan cara ini, perubahan state dapat ditampilkan tanpa harus membangun ulang seluruh aplikasi.
